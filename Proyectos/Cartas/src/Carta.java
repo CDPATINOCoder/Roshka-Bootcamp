@@ -26,6 +26,48 @@ public class Carta {
                 break;
             }
         }
+//        System.out.println(getCarta());
+    }
+
+    //constructor manual
+    public Carta(String cartaCompletaManual) {
+        if (esCartaValida(cartaCompletaManual)) {
+            this.valor = String.valueOf(cartaCompletaManual.charAt(0)).toUpperCase();
+            this.palo = String.valueOf(cartaCompletaManual.charAt(1)).toUpperCase();
+            CARTAS_CREADAS.add(valor + palo);
+            System.out.println(getCarta());
+        } else {
+            System.out.println("Cerrando programa...");
+            System.exit(1);
+        }
+    }
+
+    public static boolean esCartaValida(String cartaCompletaManual) {
+        if (cartaCompletaManual.isEmpty()) {
+            System.out.println("La carta ingresada no puede estar vacía");
+            return false;
+        }
+        if (cartaCompletaManual.length() != 2) {
+            System.out.println(cartaCompletaManual + " no es una carta valida");
+            System.out.println("La carta ingresada debe ser de 2 Cáracteres. Por ejemplo: '2C'");
+            return false;
+        }
+        if (!VALORES_POSIBLES.contains(String.valueOf(cartaCompletaManual.charAt(0)))) {
+            System.out.println(cartaCompletaManual + " no es una carta valida");
+            System.out.println("El valor de la carta solo puede agarrar: " + VALORES_POSIBLES);
+            return false;
+        }
+        if (!PALOS_POSIBLES.contains(String.valueOf(cartaCompletaManual.charAt(1)))) {
+            System.out.println(cartaCompletaManual + " no es una carta valida");
+            System.out.println("El palo de la carta solo puede agarrar: " + PALOS_POSIBLES);
+            return false;
+        }
+        if (CARTAS_CREADAS.contains(cartaCompletaManual)) {
+            System.out.println(cartaCompletaManual + " no es una carta valida");
+            System.out.println("Esta carta ya fue agregada, no pueden repetirse");
+            return false;
+        }
+        return true;
     }
 
     public static String getRandomElemento(Set<String> set, Random random) {

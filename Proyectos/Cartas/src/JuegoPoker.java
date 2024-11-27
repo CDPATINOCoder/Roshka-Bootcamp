@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.stream.Collectors;
 public class JuegoPoker {
+
     public static String determinarJugada(List<Carta> cartas) {
 
         //Uso stream para convertir todos mis objetos a string y pasarlos a valorNumerico();
@@ -8,6 +9,9 @@ public class JuegoPoker {
         List<Integer> valoresEnNumeros = cartas.stream()
                 .map(carta -> valorNumerico(carta.valor))
                 .sorted().collect(Collectors.toList());
+
+        List<String> valoresString = new ArrayList(numericoAString(valoresEnNumeros));
+
 
         //Lo mismo para enlistar todos palos en una lista de palos
         List<String> palos = cartas.stream()
@@ -30,7 +34,7 @@ public class JuegoPoker {
         if (esTrio(conteoValores)) return "Trío";
         if (esParDoble(conteoValores)) return "Par Doble";
         if (esPar(conteoValores)) return "Par";
-        return "Carta alta: " + Collections.max(valoresEnNumeros);
+        return "Carta Alta: " + getCartaAlta(valoresString);
     }
 
     //Metodo para representar las letras en valores númericos y realizar mejor las comparaciones
@@ -43,6 +47,29 @@ public class JuegoPoker {
             case "K" : return 13;
             default : return Integer.parseInt(valor);
         }
+    }
+
+    public static List<String> numericoAString(List<Integer> valorNumerico) {
+        List<String> valoresString = new ArrayList<>();
+        for (int i = 0; i < valorNumerico.size(); i++) {
+            switch (valorNumerico.get(i)) {
+                case 10:
+                    valoresString.add("T");
+                    break;
+                case 11:
+                    valoresString.add("J");
+                    break;
+                case 12:
+                    valoresString.add("Q");
+                    break;
+                case 13:
+                    valoresString.add("K");
+                    break;
+                default:
+                    valoresString.add(String.valueOf(valorNumerico.get(i)));
+            }
+        }
+        return valoresString;
     }
 
     //Metodo para verificar si el mazo forma una Escalera Color
@@ -91,6 +118,49 @@ public class JuegoPoker {
 
     public static boolean esPar(HashMap<Integer, Integer> conteoValores) {
         return conteoValores.containsValue(2);
+    }
+
+    public static String getCartaAlta(List<String> valoresString) {
+        String cartaAlta = "0";
+        for (int i = 0; i < valoresString.size(); i++) {
+            switch (valoresString.get(i)) {
+                case "A":
+                    cartaAlta = "14";
+                    break;
+                case "K":
+                    cartaAlta = "13";
+                    break;
+                case "Q":
+                    cartaAlta = "12";
+                    break;
+                case "J":
+                    cartaAlta = "11";
+                    break;
+                case "T":
+                    cartaAlta = "10";
+                    break;
+                default:
+                    int valorNumerico = Integer.parseInt(valoresString.get(i));
+                    if (valorNumerico > Integer.parseInt(cartaAlta)) {
+                        cartaAlta = String.valueOf(valorNumerico);
+                    }
+            }
+        }
+
+        switch (cartaAlta) {
+            case "14":
+                return "A";
+            case "13":
+                return "K";
+            case "12":
+                return "Q";
+            case "11":
+                return "J";
+            case "10":
+                return "T";
+        }
+
+        return cartaAlta;
     }
 
 
