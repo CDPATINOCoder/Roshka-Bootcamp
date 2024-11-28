@@ -34,7 +34,7 @@ public class JuegoPoker {
         if (esTrio(conteoValores)) return "Trío";
         if (esParDoble(conteoValores)) return "Par Doble";
         if (esPar(conteoValores)) return "Par";
-        return "Carta Alta: " + getCartaAlta(valoresString);
+        return "Carta Alta";
     }
 
     //Metodo para representar las letras en valores númericos y realizar mejor las comparaciones

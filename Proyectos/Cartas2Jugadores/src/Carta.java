@@ -3,7 +3,7 @@ import java.util.Random;
 public class Carta {
     //Definimos como constantes los valores y palos posibles para una carta
     private static final Set<String> VALORES_POSIBLES = Set.of("A", "K", "Q", "J", "T", "2", "3", "4", "5", "6", "7", "8", "9");
-    private static final Set<String> PALOS_POSIBLES = Set.of("S", "H", "D", "C");
+        private static final Set<String> PALOS_POSIBLES = Set.of("S", "H", "D", "C");
 
     //Definimos en un set las cartas creadas
     private static final Set<String> CARTAS_CREADAS = new HashSet();
@@ -30,12 +30,12 @@ public class Carta {
     }
 
     //constructor manual
-    public Carta(String cartaCompletaManual) {
+    public Carta(String cartaCompletaManualOriginal) {
+        String cartaCompletaManual = cartaCompletaManualOriginal.toUpperCase();
         if (esCartaValida(cartaCompletaManual)) {
             this.valor = String.valueOf(cartaCompletaManual.charAt(0)).toUpperCase();
             this.palo = String.valueOf(cartaCompletaManual.charAt(1)).toUpperCase();
             CARTAS_CREADAS.add(valor + palo);
-            System.out.println(getCarta());
         } else {
             System.out.println("Cerrando programa...");
             System.exit(1);
@@ -75,8 +75,19 @@ public class Carta {
         return set.stream().skip(index).findFirst().orElse(null);
     }
 
+
+
+    public static void reiniciarCartasCreadas() {
+        CARTAS_CREADAS.clear(); //
+    }
+
     public String getCarta () {
         return this.valor + this.palo;
+    }
+
+    @Override
+    public String toString() {
+        return getCarta(); // Usa getCarta para proporcionar la representación de la carta
     }
 }
 
