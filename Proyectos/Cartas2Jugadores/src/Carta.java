@@ -30,7 +30,8 @@ public class Carta {
     }
 
     //constructor manual
-    public Carta(String cartaCompletaManual) {
+    public Carta(String cartaCompletaManualOriginal) {
+        String cartaCompletaManual = cartaCompletaManualOriginal.toUpperCase();
         if (esCartaValida(cartaCompletaManual)) {
             this.valor = String.valueOf(cartaCompletaManual.charAt(0)).toUpperCase();
             this.palo = String.valueOf(cartaCompletaManual.charAt(1)).toUpperCase();
